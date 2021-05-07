@@ -29,10 +29,50 @@ join (Fork Blue x a b) c = Fork Red x (merge a c) b
 join (Fork Red x a b) c = Fork Blue x a (merge b c)
 
 
+
+
+printTree :: (Ord a, Show a) => Tree a -> IO()
+printTree = subPrintTree 1 []
+
+subPrintTree :: (Ord a, Show a) => Int -> [Int] -> Tree a -> IO ()
+subPrintTree _ _ Null = putStrLn "[]"
+subPrintTree n nlist (Fork col x a b) = do
+    print x
+    let nlist1 = nlist ++ [n]
+
+    makeEdge 1 n nlist1 (putStr "|  ") (putStr  "   ")
+    putStrLn ""
+    makeEdge 1 (n-1) nlist1 (putStr "|  ") (putStr  "   ")
+    putStr "+- "
+    subPrintTree (n+1) nlist1 a
+
+    makeEdge 1 n nlist1 (putStr "|  ") (putStr  "   ")
+    putStrLn ""
+    makeEdge 1 (n-1) nlist1 (putStr "|  ") (putStr  "   ")
+    putStr "`- "
+    subPrintTree (n+1) nlist b
+
+makeEdge :: Monad m => Int -> Int -> [Int] -> m a -> m a -> m ()
+makeEdge i max [] act1 act2
+    | i <= max  = do
+        act2
+        makeEdge (i+1) max [] act1 act2
+    | otherwise = return ()
+makeEdge i max list@(h:t) act1 act2
+    | i > max   = return ()
+    | i == h    = do
+        act1
+        makeEdge (i+1) max t act1 act2
+    | otherwise = do
+        act2
+        makeEdge (i+1) max list act1 act2
+
+
+
 main :: IO ()
 main = do
-    print ans1
-    print ans2
+    printTree ans1
+    printTree ans2
     where
         ans1 = insert 2 
             $ insert 1 
@@ -44,7 +84,6 @@ main = do
             $ insert 7 
             $ insert 9 Null
         
-
         s0 = insert 9 
             $ insert 8 
             $ insert 7 Null
