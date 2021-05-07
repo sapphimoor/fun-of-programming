@@ -75,25 +75,18 @@ makeEdge i max list@(h:t) act1 act2
 
 main :: IO ()
 main = do
-    printTree ans1
-    printTree ans2
+    printTree ans
     where
-        ans1 = insert 2
-            $ insert 1
-            $ insert 4
-            $ insert 3
-            $ insert 6
-            $ insert 5
+        ans = insert 13
+            $ insert 12
+            $ insert 11
+            $ insert 10
+            $ insert 9
             $ insert 8
             $ insert 7
-            $ insert 9 Null
-
-        ans2 = insert 9
-            $ insert 2
-            $ insert 1
-            $ insert 4
-            $ insert 3
             $ insert 6
             $ insert 5
-            $ insert 7
-            $ insert 8 Null
+            $ insert 4
+            $ insert 3
+            $ insert 2
+            $ insert 1 Null
