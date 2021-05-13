@@ -27,6 +27,9 @@ join :: Ord a => Tree a -> Tree a -> Tree a
 join (Fork x a b) c = Fork x b (merge a c)
 
 
+inserts :: (Ord a, Show a) => Tree a -> [a] -> Tree a
+inserts = foldl (flip insert)
+
 
 printTree :: (Ord a, Show a) => Tree a -> IO()
 printTree = subPrintTree 1 []

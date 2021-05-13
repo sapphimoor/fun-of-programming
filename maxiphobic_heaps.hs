@@ -39,6 +39,9 @@ size Null = 0
 size (Fork n _ _ _) = n
 
 
+inserts :: (Ord a, Show a) => Tree a -> [a] -> Tree a
+inserts = foldl (flip insert)
+
 
 printTree :: (Ord a, Show a) => Tree a -> IO()
 printTree = subPrintTree 1 []
@@ -82,8 +85,7 @@ makeEdge i max list@(h:t) act1 act2
 main :: IO ()
 main = printTree ans
     where
-        ans = deleteMin
-            $ insert 7 
+        ans = insert 7 
             $ insert 6 
             $ insert 5 
             $ insert 4 

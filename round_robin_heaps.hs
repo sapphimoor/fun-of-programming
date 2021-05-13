@@ -29,6 +29,8 @@ join (Fork Blue x a b) c = Fork Red x (merge a c) b
 join (Fork Red x a b) c = Fork Blue x a (merge b c)
 
 
+inserts :: (Ord a, Show a) => Tree a -> [a] -> Tree a
+inserts = foldl (flip insert)
 
 
 printTree :: (Ord a, Show a) => Tree a -> IO()
