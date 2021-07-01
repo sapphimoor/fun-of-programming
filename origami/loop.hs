@@ -6,8 +6,7 @@ import Data.Maybe
 data Nat = Zero | Succ Nat deriving (Show, Eq)
 
 makeNat :: Integer -> Nat
-makeNat n = if n==0 then Zero else Succ $ makeNat $ n - 1
-
+makeNat = unfoldN (==0) pred 
 
 foldN :: a -> (a -> a) -> Nat -> a
 foldN z s Zero      = z
