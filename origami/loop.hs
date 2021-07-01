@@ -285,27 +285,9 @@ else that is passed "Succ $ unfoldN p f $ f y" and subsequently becomes
     foldN x f (Succ $ unfoldN p f $ f y)
     = f (foldN x f $ unfoldN p f $ f y)
     = f (untilN2 p f x (f y))
-    = f $ foldN x f $ unfoldN p f $ f y
-Next, the formula
-    unfoldN p f $ f y
-has also 2 cases:
-    if p (f y) then Zero
-               else Succ $ unfoldN p f $ f $ f y
-If "p (f y)" then the function
-    foldN x f
-is passed "Zero" and subsequently becomes
-    foldN x f Zero = x
-else that is passed "Succ $ unfoldN p f $ f $ f y" and subsequently becomes
-    foldN x f (Succ $ unfoldN p f $ f $ f y)
-    = f (foldN x f $ unfoldN p f $ f $ f y)
-    = f (untilN2 p f x (f y))
-    = f $ foldN x f $ unfoldN p f $ f $ f y
-and now, at former f is passed "x" and becomes
-    f x
-otherwise f is passed "f $ foldN x f $ unfoldN p f $ f $ f y" and becomes
-    f $ f $ foldN x f $ unfoldN p f $ f $ f y
-so "f (untilN2 p f x (f y))" can be rewrited to the formula
-    untilN2 p f (f x) (f y)
+    = f (foldN x f $ unfoldN p f $ f y)
+    = foldN (f x) f (unfoldN p f $ f y)
+    = untilN2 p f (f x) $ f y
 From the avobe, we can obtain the result
     untilN2 p f x y = if p y then x else untilN2 p f (f x) $ f y
 -}
