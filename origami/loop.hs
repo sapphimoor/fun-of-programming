@@ -55,7 +55,7 @@ myFoldN z s = foldN' f
         f (Just n)  = s n
 
 myFoldN' :: (Maybe a -> a) -> Nat -> a
-myFoldN' f = foldN (f Nothing) $ \n -> f $ Just n
+myFoldN' f = foldN (f Nothing) $ f . Just
 
 
 -------------------------------------------------
@@ -83,10 +83,10 @@ addN :: Nat -> Nat -> Nat
 addN n = foldN n Succ
 
 mulN :: Nat -> Nat -> Nat
-mulN n = foldN Zero $ addN n
+mulN = foldN Zero . addN
 
 powN :: Nat -> Nat -> Nat
-powN n = foldN (Succ Zero) $ mulN n
+powN = foldN (Succ Zero) . mulN
 
 
 test_addN1 = addN (makeNat 3) $ makeNat 2
@@ -132,7 +132,7 @@ test_predNN2 = predNN (makeNat 5) $ makeNat 7
 -- ex3.20
 
 subN :: Nat -> Nat -> Maybe Nat
-subN n m = predNN m n
+subN = flip predNN
 
 eqN :: Nat -> Nat -> Bool
 eqN = ((==Just Zero) .) . subN
